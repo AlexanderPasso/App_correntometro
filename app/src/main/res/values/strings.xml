@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">correntometro</string>
+    <string name="save_date_button">Iniciar Lectura</string>
+    <string name="history_button">Historial</string>
+    <string name="desconnect_button">Desconectar</string>
+    <string name="data_pulse_text_view">Mostrar datos de pulsos</string>
+    <string name="data_velocity_text_view">Mostrar datos de velocidad</string>
+    <string name="title_activity_historial">Historial</string>
+
+
+
+    <string name="text_acerca_de"> Aplicación desarrollada por el grupo de investigación GEPAR (Grupo de investigación de Electrónica,Potencia,Automatización y Robótica) para el grupo de investigación GeoLimna. Diseñada como una herramienta especializada en la visualización de datos en tiempo real sobre caudal y velocidad, además del almacenamiento de estos.</string>
+
+</resources>
