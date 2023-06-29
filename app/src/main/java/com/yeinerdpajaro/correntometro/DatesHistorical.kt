@@ -22,8 +22,10 @@ class DatesHistorical : AppCompatActivity() {
 
     private fun init() {
         val dataList = readDataCsv()
+        val last50Data = dataList.takeLast(40)
 
-        for ((index, data) in dataList.withIndex()) {
+
+        for ((index, data) in last50Data.withIndex()) {
             if (index > 0) {
                 val pulso = data[0].trim().toInt() // Obtener el primer dato (Pulsos) y convertirlo a Int
                 val velocidad = data[1].trim().toFloat() // Obtener el segundo dato (Velocidad) y convertirlo a Float

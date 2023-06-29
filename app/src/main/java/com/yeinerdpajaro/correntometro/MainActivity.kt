@@ -187,8 +187,6 @@ class MainActivity : AppCompatActivity() {
         text.text = "Conectado"
         text.setTextColor(color)
 
-        Toast.makeText(this, "Texto Conectado", Toast.LENGTH_SHORT).show()
-
     }
 
 
