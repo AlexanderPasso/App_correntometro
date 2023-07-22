@@ -1,5 +1,6 @@
 package com.yeinerdpajaro.correntometro
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -17,7 +18,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.yeinerdpajaro.correntometro.databinding.ActivityMainBinding
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Inicializar el spinner del menú
-        var menuSpinner = findViewById(R.id.menu_spinner) as Spinner
+        var menuSpinner = findViewById<Spinner>(R.id.menu_spinner)
         val adapter = ArrayAdapter.createFromResource(this, R.array.menu_items, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         menuSpinner.adapter = adapter
@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*Permite realizar el cambio del estado a conectado para mostrar al usuario*/
-    private fun conected_state(){
+    private fun conectedState(){
         val color = ContextCompat.getColor(this, R.color.green_up)
         val text = findViewById<TextView>(R.id.texEstado)
 
@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*Permite la conexion de dispositivo por bluetooth */
-    public class ConnectToDevice(c: Context) : AsyncTask<Void, Void, String>() {
+    class ConnectToDevice(c: Context) : AsyncTask<Void, Void, String>() {
         private var connectSuccess: Boolean = true
         private val context: Context
 
@@ -219,6 +219,8 @@ class MainActivity : AppCompatActivity() {
             m_progress = ProgressDialog.show(context, "Connecting...", "please wait")
         }
 
+        @Deprecated("Deprecated in Java")
+        @SuppressLint("MissingPermission")
         override fun doInBackground(vararg p0: Void?): String? {
             try {
                 if (m_bluetoothSocket == null || !m_isConnected) {
@@ -242,7 +244,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("data", "couldn't connect")
             } else {
                 m_isConnected = true
-                (context as MainActivity).conected_state() // Llamar a la función conected_state() en la instancia de MainActivity
+                (context as MainActivity).conectedState() // Llamar a la función conected_state() en la instancia de MainActivity
 
             }
             m_progress.dismiss()

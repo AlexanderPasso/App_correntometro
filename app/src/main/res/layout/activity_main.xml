@@ -65,7 +65,8 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:autoSizeTextType="uniform" />
 
                 <TextView
                     android:id="@+id/textPulsos"
@@ -75,7 +76,8 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="25sp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    app:autoSizeTextType="uniform" />
             </LinearLayout>
 
 
@@ -103,7 +105,8 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:autoSizeTextType="uniform" />
 
                 <TextView
                     android:id="@+id/Textvelocidad"
@@ -113,7 +116,8 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="25sp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    app:autoSizeTextType="uniform" />
             </LinearLayout>
 
 
@@ -152,7 +156,8 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:autoSizeTextType="uniform" />
 
                 <TextView
                     android:id="@+id/Textcaudal"
@@ -162,7 +167,8 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="25sp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    app:autoSizeTextType="uniform" />
             </LinearLayout>
 
         </LinearLayout>
