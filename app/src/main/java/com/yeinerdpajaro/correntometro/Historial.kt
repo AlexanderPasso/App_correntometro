@@ -1,11 +1,13 @@
 package com.yeinerdpajaro.correntometro
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 class Historial(private val itemList: List<ListElement>, private val context: Context) : RecyclerView.Adapter<Historial.ViewHolder>() {
 
@@ -13,6 +15,7 @@ class Historial(private val itemList: List<ListElement>, private val context: Co
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = mInflater.inflate(R.layout.activity_historial, parent, false)
+
         return ViewHolder(view)
     }
 
@@ -25,11 +28,28 @@ class Historial(private val itemList: List<ListElement>, private val context: Co
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val txtPulsos: TextView = itemView.findViewById(R.id.textViewPulso)
+        private val txtVelocidad: TextView = itemView.findViewById(R.id.textViewVelocidad)
+        private val txtCaudal: TextView = itemView.findViewById(R.id.textViewCaudal)
+
+
         private val pulsos: TextView = itemView.findViewById(R.id.text_pulso_show)
         private val velocidad: TextView = itemView.findViewById(R.id.text_velocidad_show)
         private val caudal: TextView = itemView.findViewById(R.id.text_caudal_show)
 
+
+
         fun bindData(item: ListElement) {
+
+            /*txtPulsos.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+            txtVelocidad.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+            txtCaudal.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+
+            pulsos.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40F)
+            velocidad.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40F)
+            caudal.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40F)*/
+
             pulsos.text = item.pulsos.toString()
             velocidad.text = item.velocidad.toString()
             caudal.text = item.caudal.toString()

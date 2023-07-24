@@ -12,6 +12,7 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.os.Environment
 import android.util.Log
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
@@ -59,6 +60,34 @@ class MainActivity : AppCompatActivity() {
         val BtnDesconectar = findViewById<Button>(R.id.btnDesconectar)
         val BtnHistorial = findViewById<Button>(R.id.BtnHistorial)
         val BtnGuardarDatos = findViewById<Button>(R.id.BtnGuardarDatos)
+
+
+        /*val txtPulsosView = findViewById<TextView>(R.id.titulo1)
+        val txtVelocidadView = findViewById<TextView>(R.id.titulo2)
+        val txtCaudalView = findViewById<TextView>(R.id.titulo3)
+
+        val txtPulsos = findViewById<TextView>(R.id.textPulsos)
+        val txtVelocidad = findViewById<TextView>(R.id.Textvelocidad)
+        val txtCaudal = findViewById<TextView>(R.id.Textcaudal)
+
+        val textEstado = findViewById<TextView>(R.id.texEstado)
+
+
+        txtPulsosView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+        txtVelocidadView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+        txtCaudalView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+
+        txtPulsos.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+        txtVelocidad.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+        txtCaudal.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+
+        textEstado.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
+
+        BtnDesconectar.setTextSize(TypedValue.COMPLEX_UNIT_PX, 35F)
+        BtnHistorial.setTextSize(TypedValue.COMPLEX_UNIT_PX, 35F)
+        BtnGuardarDatos.setTextSize(TypedValue.COMPLEX_UNIT_PX, 35F)*/
+
+
 
 
         m_address = intent.getStringExtra(BluetoothActivity.EXTRA_ADDRESS).toString()

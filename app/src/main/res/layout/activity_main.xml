@@ -1,266 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="wrap_content">
 
-
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/screen_home">
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <LinearLayout
-            android:id="@+id/layaoutText"
+
+        <RelativeLayout
+            android:id="@+id/screen_home"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/texEstado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Desconectado"
-                android:textColor="#FF0000"
-                android:textSize="25dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layaout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layaoutText"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal">
-
-            <!-- Pulsos -->
             <LinearLayout
-                android:id="@+id/rectangulo2"
-                android:layout_width="170dp"
-                android:layout_height="100dp"
-                android:layout_below="@+id/rectangulo1"
-                android:layout_alignParentStart="false"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="0dp"
-                android:background="@drawable/rectangulo_con_borde"
-                android:elevation="0dp"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:id="@+id/layaoutText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/titulo2"
+                    android:id="@+id/texEstado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pulsos (P/seg)"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:autoSizeTextType="uniform" />
-
-                <TextView
-                    android:id="@+id/textPulsos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="25sp"
                     android:layout_marginTop="10dp"
-                    app:autoSizeTextType="uniform" />
+                    android:text="Desconectado"
+                    android:autoSizeTextType="none"
+                    android:textColor="#FF0000"
+                    android:textSize="25dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layaout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layaoutText"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+
+                <!-- Pulsos -->
+                <LinearLayout
+                    android:id="@+id/rectangulo2"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rectangulo1"
+                    android:layout_alignParentStart="false"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/rectangulo_con_borde"
+                    android:elevation="0dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/titulo2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pulsos (P/seg)"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:autoSizeTextType="none" />
+
+                    <TextView
+                        android:id="@+id/textPulsos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="25sp"
+                        app:autoSizeTextType="uniform" />
+                </LinearLayout>
+
+
+                <!-- Velocidad -->
+                <LinearLayout
+                    android:id="@+id/rectangulo1"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/rectangulo_con_borde"
+                    android:elevation="0dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/titulo1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Velocidad (m/s)"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:autoSizeTextType="none" />
+
+                    <TextView
+                        android:id="@+id/Textvelocidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="25sp"
+                        app:autoSizeTextType="uniform" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
 
-            <!-- Velocidad -->
             <LinearLayout
-                android:id="@+id/rectangulo1"
-                android:layout_width="170dp"
-                android:layout_height="100dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="0dp"
-                android:background="@drawable/rectangulo_con_borde"
-                android:elevation="0dp"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:id="@+id/layout_caudal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layaout"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/titulo1"
+                <!-- Caudal -->
+                <LinearLayout
+                    android:id="@+id/rectangulo3"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="120dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/rectangulo_con_borde"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/titulo3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Caudal (m³/seg)"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:autoSizeTextType="none" />
+
+                    <TextView
+                        android:id="@+id/Textcaudal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="25sp"
+                        app:autoSizeTextType="uniform" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_botones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_caudal"
+                android:layout_marginTop="70dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Velocidad (m/s)"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:autoSizeTextType="uniform" />
+                    android:layout_centerHorizontal="true">
 
-                <TextView
-                    android:id="@+id/Textvelocidad"
+                    <Button
+                        android:id="@+id/BtnHistorial"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="50dp"
+                        android:backgroundTint="@color/green_inicio"
+                        android:text="@string/history_button"
+                        android:textColor="@color/white">
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/BtnGuardarDatos"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="70dp"
+                        android:backgroundTint="@color/green_inicio"
+                        android:text="@string/save_date_button"
+                        android:textColor="@color/white">
+
+
+                    </Button>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/conection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_caudal"
+                android:layout_marginTop="170dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="25sp"
+                    android:layout_centerHorizontal="true">
+
+
+                    <Button
+                        android:id="@+id/btnDesconectar"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="130dp"
+                        android:backgroundTint="@color/green_inicio"
+                        android:text="@string/desconnect_button"
+                        android:textColor="@color/white">
+
+                    </Button>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_botones"
                     android:layout_marginTop="10dp"
-                    app:autoSizeTextType="uniform" />
-            </LinearLayout>
+                    android:orientation="horizontal">
 
+                    <Spinner
+                        android:id="@+id/menu_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="10dp" />
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/layout_caudal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layaout"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal">
-
-            <!-- Caudal -->
-            <LinearLayout
-                android:id="@+id/rectangulo3"
-                android:layout_width="170dp"
-                android:layout_height="100dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="120dp"
-                android:layout_marginBottom="0dp"
-                android:background="@drawable/rectangulo_con_borde"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/titulo3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Caudal (m³/seg)"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:autoSizeTextType="uniform" />
-
-                <TextView
-                    android:id="@+id/Textcaudal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="25sp"
-                    android:layout_marginTop="10dp"
-                    app:autoSizeTextType="uniform" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_botones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_caudal"
-            android:orientation="horizontal"
-            android:layout_marginTop="70dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
-
-                <Button
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/BtnHistorial"
-                    android:layout_marginStart="50dp"
-                    android:backgroundTint="@color/green_inicio"
-                    android:text="@string/history_button"
-                    android:textColor="@color/white">
-
-                </Button>
-
-                <Button
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="70dp"
-                    android:id="@+id/BtnGuardarDatos"
-                    android:backgroundTint="@color/green_inicio"
-                    android:text="@string/save_date_button"
-                    android:textColor="@color/white">
-
-
-                </Button>
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/conection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_caudal"
-            android:orientation="horizontal"
-            android:layout_marginTop="170dp">
+        </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
-
-
-                <Button
-                    android:id="@+id/btnDesconectar"
-                    android:layout_width="150dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="130dp"
-                    android:backgroundTint="@color/green_inicio"
-                    android:text="@string/desconnect_button"
-                    android:textColor="@color/white">
-
-                </Button>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_botones"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <Spinner
-                    android:id="@+id/menu_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="10dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>
