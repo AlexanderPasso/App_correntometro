@@ -31,7 +31,7 @@ class BluetoothActivity : AppCompatActivity() {
         val EXTRA_ADDRESS: String = "Device_adress"
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bluetooth)
@@ -42,25 +42,6 @@ class BluetoothActivity : AppCompatActivity() {
             scanBt()
         }
 
-        // If Bluetooth is not enabled, request permission to enable it
-      /*  if (!bluetoothAdapter.isEnabled) {
-            requestBluetoothPermission()
-        }else{
-            pairedDeviceList()
-        }*/
-
-
-        //Fragmento de codigo para extraer fecha y hora para guardar en el archivo estos datos
-        /*val now = LocalDateTime.now()
-
-        // Save the date and time in a variable
-        val dia = now.dayOfMonth
-        val mes = now.monthValue
-        val hora = now.hour
-        val min = now.minute
-
-        Toast.makeText(this, "Fecha es: $dia:$mes:$hora:$min ", Toast.LENGTH_LONG)
-            .show()*/
 
     }
 
@@ -116,6 +97,7 @@ class BluetoothActivity : AppCompatActivity() {
         pairedDeviceList()
 
     }
+
 
 
     @SuppressLint("MissingPermission")

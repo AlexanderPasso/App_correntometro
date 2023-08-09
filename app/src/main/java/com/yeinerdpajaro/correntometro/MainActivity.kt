@@ -1,25 +1,36 @@
+@file:Suppress("DEPRECATION")
+
 package com.yeinerdpajaro.correntometro
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.content.Context
-import android.os.AsyncTask
-import android.os.Bundle
-import java.util.*
+import android.bluetooth.BluetoothServerSocket
 import android.bluetooth.BluetoothSocket
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.AsyncTask
+import android.os.Build
+import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
-import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yeinerdpajaro.correntometro.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -31,11 +42,15 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
+import java.util.*
+
 
 
 
 //val bufferedWriter = null
 private var shouldSaveData = true // Bandera para controlar si se deben guardar los datos o no
+
+
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -46,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         var m_isConnected: Boolean = false
         lateinit var m_address: String
         val fileWriter  = null
+
     }
 
 
@@ -62,36 +78,8 @@ class MainActivity : AppCompatActivity() {
         val BtnGuardarDatos = findViewById<Button>(R.id.BtnGuardarDatos)
 
 
-        /*val txtPulsosView = findViewById<TextView>(R.id.titulo1)
-        val txtVelocidadView = findViewById<TextView>(R.id.titulo2)
-        val txtCaudalView = findViewById<TextView>(R.id.titulo3)
-
-        val txtPulsos = findViewById<TextView>(R.id.textPulsos)
-        val txtVelocidad = findViewById<TextView>(R.id.Textvelocidad)
-        val txtCaudal = findViewById<TextView>(R.id.Textcaudal)
-
-        val textEstado = findViewById<TextView>(R.id.texEstado)
-
-
-        txtPulsosView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-        txtVelocidadView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-        txtCaudalView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-
-        txtPulsos.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-        txtVelocidad.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-        txtCaudal.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-
-        textEstado.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-
-        BtnDesconectar.setTextSize(TypedValue.COMPLEX_UNIT_PX, 35F)
-        BtnHistorial.setTextSize(TypedValue.COMPLEX_UNIT_PX, 35F)
-        BtnGuardarDatos.setTextSize(TypedValue.COMPLEX_UNIT_PX, 35F)*/
-
-
-
-
         m_address = intent.getStringExtra(BluetoothActivity.EXTRA_ADDRESS).toString()
-        ConnectToDevice(this).execute()
+        ConnectToDevice(this ).execute()
 
 
         BtnDesconectar.setOnClickListener{
@@ -113,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         menuSpinner.adapter = adapter
 
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -209,7 +198,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*Permite realizar el cambio del estado a conectado para mostrar al usuario*/
-    private fun conectedState(){
+    fun conectedState(){
         val color = ContextCompat.getColor(this, R.color.green_up)
         val text = findViewById<TextView>(R.id.texEstado)
 
@@ -243,13 +232,14 @@ class MainActivity : AppCompatActivity() {
             this.context = c
         }
 
+        @Suppress("OVERRIDE_DEPRECATION")
         override fun onPreExecute() {
             super.onPreExecute()
             m_progress = ProgressDialog.show(context, "Connecting...", "please wait")
         }
 
-        @Deprecated("Deprecated in Java")
-        @SuppressLint("MissingPermission")
+
+        @Suppress("OVERRIDE_DEPRECATION")
         override fun doInBackground(vararg p0: Void?): String? {
             try {
                 if (m_bluetoothSocket == null || !m_isConnected) {
@@ -267,6 +257,8 @@ class MainActivity : AppCompatActivity() {
             return null
         }
 
+
+        @Suppress("OVERRIDE_DEPRECATION")
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             if (!connectSuccess) {
@@ -279,5 +271,7 @@ class MainActivity : AppCompatActivity() {
             m_progress.dismiss()
         }
     }
+
+
 
 }

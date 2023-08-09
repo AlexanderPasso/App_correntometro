@@ -29,10 +29,6 @@ class Historial(private val itemList: List<ListElement>, private val context: Co
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val txtPulsos: TextView = itemView.findViewById(R.id.textViewPulso)
-        private val txtVelocidad: TextView = itemView.findViewById(R.id.textViewVelocidad)
-        private val txtCaudal: TextView = itemView.findViewById(R.id.textViewCaudal)
-
 
         private val pulsos: TextView = itemView.findViewById(R.id.text_pulso_show)
         private val velocidad: TextView = itemView.findViewById(R.id.text_velocidad_show)
@@ -41,14 +37,6 @@ class Historial(private val itemList: List<ListElement>, private val context: Co
 
 
         fun bindData(item: ListElement) {
-
-            /*txtPulsos.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-            txtVelocidad.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-            txtCaudal.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F)
-
-            pulsos.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40F)
-            velocidad.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40F)
-            caudal.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40F)*/
 
             pulsos.text = item.pulsos.toString()
             velocidad.text = item.velocidad.toString()
