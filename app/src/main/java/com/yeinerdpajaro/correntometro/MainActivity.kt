@@ -2,18 +2,12 @@
 
 package com.yeinerdpajaro.correntometro
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothServerSocket
 import android.bluetooth.BluetoothSocket
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -42,6 +36,7 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
+import java.io.InputStream
 import java.util.*
 
 
@@ -55,9 +50,10 @@ private var shouldSaveData = true // Bandera para controlar si se deben guardar 
 class MainActivity : AppCompatActivity() {
     companion object {
         var m_myUUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-        var m_bluetoothSocket: BluetoothSocket? = null
+        lateinit var m_bluetoothSocket: BluetoothSocket
         lateinit var m_progress: ProgressDialog
-        lateinit var m_bluetoothAdapter: BluetoothAdapter
+        val m_bluetoothAdapter: BluetoothAdapter?= BluetoothAdapter.getDefaultAdapter()
+        lateinit var inputStream: InputStream
         var m_isConnected: Boolean = false
         lateinit var m_address: String
         val fileWriter  = null
@@ -79,11 +75,19 @@ class MainActivity : AppCompatActivity() {
 
 
         m_address = intent.getStringExtra(BluetoothActivity.EXTRA_ADDRESS).toString()
-        ConnectToDevice(this ).execute()
+        //ConnectToDevice(this ).execute()
+
+        val device: BluetoothDevice? = m_bluetoothAdapter?.getRemoteDevice(m_address)
+
+        if(device != null){
+            //Realizar conexion
+            ConnectThread(device).start()
+        }
+
 
 
         BtnDesconectar.setOnClickListener{
-            disconnect()
+            //disconnect()
         }
 
         BtnGuardarDatos.setOnClickListener{
@@ -101,7 +105,6 @@ class MainActivity : AppCompatActivity() {
         menuSpinner.adapter = adapter
 
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -198,18 +201,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*Permite realizar el cambio del estado a conectado para mostrar al usuario*/
-    fun conectedState(){
+    fun conectedState(texto: String){
         val color = ContextCompat.getColor(this, R.color.green_up)
         val text = findViewById<TextView>(R.id.texEstado)
 
-        text.text = "Conectado"
+        text.text = texto
         text.setTextColor(color)
 
     }
 
 
     /*Funcion que me permite desconectar del bluetooth*/
-     fun disconnect() {
+     /*fun disconnect() {
         if (m_bluetoothSocket != null) {
             try {
                 m_bluetoothSocket!!.close()
@@ -221,57 +224,32 @@ class MainActivity : AppCompatActivity() {
             }
         }
         finish()
-    }
-
-    /*Permite la conexion de dispositivo por bluetooth */
-    class ConnectToDevice(c: Context) : AsyncTask<Void, Void, String>() {
-        private var connectSuccess: Boolean = true
-        private val context: Context
-
-        init {
-            this.context = c
-        }
-
-        @Suppress("OVERRIDE_DEPRECATION")
-        override fun onPreExecute() {
-            super.onPreExecute()
-            m_progress = ProgressDialog.show(context, "Connecting...", "please wait")
-        }
+    }*/
 
 
-        @Suppress("OVERRIDE_DEPRECATION")
-        override fun doInBackground(vararg p0: Void?): String? {
+    private inner class  ConnectThread(val device: BluetoothDevice) : Thread(){
+
+        override fun run(){
+
             try {
-                if (m_bluetoothSocket == null || !m_isConnected) {
-                    m_bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-                    val device: BluetoothDevice = m_bluetoothAdapter.getRemoteDevice(m_address)
-                    m_bluetoothSocket = device.createInsecureRfcommSocketToServiceRecord(m_myUUID)
-                    BluetoothAdapter.getDefaultAdapter().cancelDiscovery()
-                    m_bluetoothSocket!!.connect()
+                m_bluetoothSocket = device.createRfcommSocketToServiceRecord(m_myUUID)
+                m_bluetoothSocket.connect()
 
-                }
-            } catch (e: IOException) {
-                connectSuccess = false
+                conectedState("Conectado")
+
+
+
+            }catch (e: IOException){
                 e.printStackTrace()
             }
-            return null
-        }
-
-
-        @Suppress("OVERRIDE_DEPRECATION")
-        override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
-            if (!connectSuccess) {
-                Log.i("data", "couldn't connect")
-            } else {
-                m_isConnected = true
-                (context as MainActivity).conectedState() // Llamar a la función conected_state() en la instancia de MainActivity
-
-            }
-            m_progress.dismiss()
         }
     }
 
+    private inner class ConnectedThread(val socket: BluetoothSocket): Thread(){
 
+        override fun run(){
+            //Enviar y recibir datos.
+        }
+    }
 
 }
