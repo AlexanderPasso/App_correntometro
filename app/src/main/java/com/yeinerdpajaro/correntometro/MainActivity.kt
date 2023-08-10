@@ -75,7 +75,6 @@ class MainActivity : AppCompatActivity() {
 
 
         m_address = intent.getStringExtra(BluetoothActivity.EXTRA_ADDRESS).toString()
-        //ConnectToDevice(this ).execute()
 
         val device: BluetoothDevice? = m_bluetoothAdapter?.getRemoteDevice(m_address)
 
@@ -87,12 +86,13 @@ class MainActivity : AppCompatActivity() {
 
 
         BtnDesconectar.setOnClickListener{
-            //disconnect()
+            disconnect()
         }
 
-        BtnGuardarDatos.setOnClickListener{
+        /*BtnGuardarDatos.setOnClickListener{
             receiveDataAsync()
-        }
+        }*/
+
         BtnHistorial.setOnClickListener{
             val intent = Intent(this, DatesHistorical::class.java)
             startActivity(intent)
@@ -128,11 +128,12 @@ class MainActivity : AppCompatActivity() {
 
     /*Permite la recepción de datos de forma sincronica*/
     private fun receiveDataAsync() {
-        val textVelocidad = findViewById<TextView>(R.id.Textvelocidad)
+
 
 
         if (m_bluetoothSocket != null) {
             val inputStream = m_bluetoothSocket!!.inputStream
+            val textVelocidad = findViewById<TextView>(R.id.Textvelocidad)
             val textCaudal = findViewById<TextView>(R.id.Textcaudal)
             val textPulsos = findViewById<TextView>(R.id.textPulsos)
 
@@ -212,11 +213,11 @@ class MainActivity : AppCompatActivity() {
 
 
     /*Funcion que me permite desconectar del bluetooth*/
-     /*fun disconnect() {
+     fun disconnect() {
         if (m_bluetoothSocket != null) {
             try {
                 m_bluetoothSocket!!.close()
-                m_bluetoothSocket = null
+               // m_bluetoothSocket = null
                 m_isConnected = false
                 shouldSaveData = false // Establecer la bandera en falso para dejar de guardar los datos
             } catch (e: IOException) {
@@ -224,7 +225,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         finish()
-    }*/
+    }
 
 
     private inner class  ConnectThread(val device: BluetoothDevice) : Thread(){
@@ -237,7 +238,8 @@ class MainActivity : AppCompatActivity() {
 
                 conectedState("Conectado")
 
-
+                val connectedThread = ConnectedThread(m_bluetoothSocket)
+                connectedThread.start()
 
             }catch (e: IOException){
                 e.printStackTrace()
@@ -245,11 +247,60 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private inner class ConnectedThread(val socket: BluetoothSocket): Thread(){
+    private inner class ConnectedThread(private val mmSocket: BluetoothSocket): Thread() {
 
-        override fun run(){
-            //Enviar y recibir datos.
+        private val mmInputStream: InputStream = mmSocket.inputStream
+        private val buffer: ByteArray = ByteArray(1024) // Tamaño del buffer para recibir datos
+        val textVelocidad = findViewById<TextView>(R.id.Textvelocidad)
+        val textCaudal = findViewById<TextView>(R.id.Textcaudal)
+        val textPulsos = findViewById<TextView>(R.id.textPulsos)
+
+
+        override fun run() {
+            var bytes: Int
+
+            // Mantén el hilo en ejecución mientras la conexión esté activa
+            while (true) {
+                try {
+                    // Lee los datos del InputStream
+                    bytes = mmInputStream.read(buffer)
+
+                    // Convierte los bytes recibidos en un String
+                    val receivedData = String(buffer, 0, bytes)
+
+                    // Procesa los datos recibidos como sea necesario
+                    //processData(receivedData)
+                    //val data = String(receivedData)
+                    val dataArray = receivedData.split(",")
+                    save_data_csv(receivedData)
+
+                    // Verificar que hay al menos tres datos separados por comas
+                    if (dataArray.size >= 3) {
+                        val dato1 = dataArray[0]    //Pulso
+                        val dato2 = dataArray[1]    //velocidad
+                        val dato3 = dataArray[2]    //Caudal
+
+                        // Actualizar la interfaz de usuario en el hilo principal
+                        CoroutineScope(Dispatchers.IO).launch {
+                            withContext(Dispatchers.Main) {
+                                // Utilizar los datos extraídos como desees
+
+                                textPulsos.text = dato1
+                                textVelocidad.text = dato2
+                                textCaudal.text = dato3
+                            }
+                        }
+
+                    }
+
+                }catch (e: IOException) {
+                    e.printStackTrace()
+                    // Manejar la excepción (por ejemplo, conexión perdida)
+                    break
+                }
+
+            }
         }
-    }
 
+    }
 }
