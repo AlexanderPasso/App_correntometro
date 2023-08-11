@@ -1,14 +1,14 @@
-@file:Suppress("DEPRECATION")
 
 package com.yeinerdpajaro.correntometro
 
-import android.app.ProgressDialog
+import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -40,8 +40,6 @@ import java.io.InputStream
 import java.util.*
 
 
-
-
 //val bufferedWriter = null
 private var shouldSaveData = true // Bandera para controlar si se deben guardar los datos o no
 
@@ -51,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var m_myUUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
         lateinit var m_bluetoothSocket: BluetoothSocket
-        lateinit var m_progress: ProgressDialog
         val m_bluetoothAdapter: BluetoothAdapter?= BluetoothAdapter.getDefaultAdapter()
         lateinit var inputStream: InputStream
         var m_isConnected: Boolean = false
@@ -71,7 +68,6 @@ class MainActivity : AppCompatActivity() {
 
         val BtnDesconectar = findViewById<Button>(R.id.btnDesconectar)
         val BtnHistorial = findViewById<Button>(R.id.BtnHistorial)
-        val BtnGuardarDatos = findViewById<Button>(R.id.BtnGuardarDatos)
 
 
         m_address = intent.getStringExtra(BluetoothActivity.EXTRA_ADDRESS).toString()
@@ -84,25 +80,15 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
         BtnDesconectar.setOnClickListener{
             disconnect()
         }
 
-        /*BtnGuardarDatos.setOnClickListener{
-            receiveDataAsync()
-        }*/
 
         BtnHistorial.setOnClickListener{
             val intent = Intent(this, DatesHistorical::class.java)
             startActivity(intent)
         }
-
-        // Inicializar el spinner del menú
-        var menuSpinner = findViewById<Spinner>(R.id.menu_spinner)
-        val adapter = ArrayAdapter.createFromResource(this, R.array.menu_items, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        menuSpinner.adapter = adapter
 
     }
 
@@ -124,62 +110,6 @@ class MainActivity : AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
     }
-
-
-    /*Permite la recepción de datos de forma sincronica*/
-    private fun receiveDataAsync() {
-
-
-
-        if (m_bluetoothSocket != null) {
-            val inputStream = m_bluetoothSocket!!.inputStream
-            val textVelocidad = findViewById<TextView>(R.id.Textvelocidad)
-            val textCaudal = findViewById<TextView>(R.id.Textcaudal)
-            val textPulsos = findViewById<TextView>(R.id.textPulsos)
-
-            // Utilizar una corutina para la lectura asíncrona
-            CoroutineScope(Dispatchers.IO).launch {
-                val buffer = ByteArray(256)
-                while (isActive) {
-                    try {
-                        val bytesRead = inputStream.read(buffer)
-                        val receivedData = buffer.copyOfRange(0, bytesRead)
-
-                        // Actualizar la interfaz de usuario en el hilo principal
-                        withContext(Dispatchers.Main) {
-                            val data = String(receivedData)
-                            val dataArray = data.split(",")
-                            save_data_csv(data)
-
-                            // Verificar que hay al menos tres datos separados por comas
-                            if (dataArray.size >= 3) {
-                                val dato1 = dataArray[0]    //Pulso
-                                val dato2 = dataArray[1]    //velocidad
-                                val dato3 = dataArray[2]    //Caudal
-
-                                // Actualizar la interfaz de usuario en el hilo principal
-                                withContext(Dispatchers.Main) {
-                                    // Utilizar los datos extraídos como desees
-
-                                    textPulsos.text = dato1
-                                    textVelocidad.text = dato2
-                                    textCaudal.text = dato3
-                                }
-                            }
-
-                            //textVelocidad.text = data
-                            //Toast.makeText("Dato recibido", Toast.LENGTH_SHORT).show()
-                            //Toast.makeText(this, "Dato recibido: $data", Toast.LENGTH_SHORT).show()
-                        }
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                        break
-                    }
-                }
-            }
-        }
-    }
-
 
     private fun save_data_csv(buffer: String) {
         if (!shouldSaveData) return // Verificar si se deben guardar los datos
@@ -233,8 +163,10 @@ class MainActivity : AppCompatActivity() {
         override fun run(){
 
             try {
+
                 m_bluetoothSocket = device.createRfcommSocketToServiceRecord(m_myUUID)
                 m_bluetoothSocket.connect()
+
 
                 conectedState("Conectado")
 
@@ -243,9 +175,11 @@ class MainActivity : AppCompatActivity() {
 
             }catch (e: IOException){
                 e.printStackTrace()
+
             }
         }
     }
+
 
     private inner class ConnectedThread(private val mmSocket: BluetoothSocket): Thread() {
 
