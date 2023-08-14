@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">correntometro</string>
-    <string name="ruta_button">Ruta CSV</string>
+    <string name="app_name">Correntometro</string>
     <string name="history_button">Historial</string>
     <string name="desconnect_button">Desconectar</string>
     <string name="data_pulse_text_view">Mostrar datos de pulsos</string>

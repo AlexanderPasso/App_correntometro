@@ -3,7 +3,6 @@ package com.yeinerdpajaro.correntometro
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +35,6 @@ class DatesHistorical : AppCompatActivity() {
                 elements.add(Historial.ListElement(pulsos = pulso, velocidad = velocidad, caudal = caudal))
 
             }// Omitir la primera línea del archivo (nombres de las columnas)
-
 
         }
 

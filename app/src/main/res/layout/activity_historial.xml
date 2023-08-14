@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:layout_marginBottom="10dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="30dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
 
@@ -44,19 +44,19 @@
                         android:layout_width = "match_parent"
                         android:layout_marginBottom = "2dp"
                         android:text = "Pulsos"
-                        android:textSize = "24sp"
+                        android:textSize = "22sp"
                         android:textColor = "@color/black"
                         android:textStyle = "bold"/>
 
                     <TextView
                         android:id="@+id/text_pulso_show"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_width = "match_parent"
-                        android:layout_marginBottom = "2dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="0"
                         android:textAlignment="center"
-                        android:text = "0"
-                        android:textSize = "24sp"
-                        android:textStyle = "bold"/>
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -77,7 +77,7 @@
                         android:layout_width = "match_parent"
                         android:layout_marginBottom = "2dp"
                         android:text = "Velocidad"
-                        android:textSize = "24sp"
+                        android:textSize = "22sp"
                         android:textColor = "@color/black"
                         android:textStyle = "bold"/>
 
@@ -88,7 +88,7 @@
                         android:layout_marginBottom = "2dp"
                         android:textAlignment="center"
                         android:text = "0"
-                        android:textSize = "24sp"
+                        android:textSize = "20sp"
                         android:textStyle = "bold"/>
 
 
@@ -112,7 +112,7 @@
                         android:layout_width = "match_parent"
                         android:layout_marginBottom = "2dp"
                         android:text = "Caudal"
-                        android:textSize = "24sp"
+                        android:textSize = "22sp"
                         android:textColor = "@color/black"
                         android:textStyle = "bold"/>
 
@@ -123,7 +123,7 @@
                         android:layout_marginBottom = "2dp"
                         android:textAlignment="center"
                         android:text = "0"
-                        android:textSize = "24sp"
+                        android:textSize = "20sp"
                         android:textStyle = "bold"/>
 
 

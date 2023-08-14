@@ -37,7 +37,10 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.io.InputStream
+import java.text.SimpleDateFormat
 import java.util.*
+import java.time.LocalDateTime
+
 
 
 //val bufferedWriter = null
@@ -111,6 +114,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    //Funcion para guardar los datos en el archivo csv
     private fun save_data_csv(buffer: String) {
         if (!shouldSaveData) return // Verificar si se deben guardar los datos
         val DatosGuardados = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "datos_guardados.csv"
@@ -120,14 +125,16 @@ class MainActivity : AppCompatActivity() {
         val fileWriter = FileWriter(file, true)
         val bufferedWriter = BufferedWriter(fileWriter)
 
+        Log.i("Activity", buffer)
+
         if (isNewFile) {
             // Agregar nombres de columnas solo si el archivo es nuevo
-            val columnNames = "Pulsos (p/seg) , Velocidad (m/seg) , Caudal (m³/seg)" // Reemplaza con los nombres de tus columnas
+            val columnNames = "Pulsos (p/seg), Velocidad (m/seg), Caudal (m³/seg)" // Reemplaza con los nombres de tus columnas
             bufferedWriter.write(columnNames)
             bufferedWriter.newLine()
         }
 
-        bufferedWriter.write(buffer) // Agregar contenido de los datos
+        bufferedWriter.write(buffer)        // Agregar contenido de los datos
         bufferedWriter.close()
     }
 
@@ -180,8 +187,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    private inner class ConnectedThread(private val mmSocket: BluetoothSocket): Thread() {
+    private inner class ConnectedThread(private val mmSocket: BluetoothSocket) : Thread() {
 
         private val mmInputStream: InputStream = mmSocket.inputStream
         private val buffer: ByteArray = ByteArray(1024) // Tamaño del buffer para recibir datos
@@ -189,9 +195,9 @@ class MainActivity : AppCompatActivity() {
         val textCaudal = findViewById<TextView>(R.id.Textcaudal)
         val textPulsos = findViewById<TextView>(R.id.textPulsos)
 
-
         override fun run() {
             var bytes: Int
+            val charBuffer = StringBuilder()  // Utilizaremos un StringBuilder para acumular los caracteres
 
             // Mantén el hilo en ejecución mientras la conexión esté activa
             while (true) {
@@ -199,42 +205,48 @@ class MainActivity : AppCompatActivity() {
                     // Lee los datos del InputStream
                     bytes = mmInputStream.read(buffer)
 
-                    // Convierte los bytes recibidos en un String
-                    val receivedData = String(buffer, 0, bytes)
-
-                    // Procesa los datos recibidos como sea necesario
-                    //processData(receivedData)
-                    //val data = String(receivedData)
-                    val dataArray = receivedData.split(",")
+                    var receivedData = String(buffer, 0, bytes)
                     save_data_csv(receivedData)
 
-                    // Verificar que hay al menos tres datos separados por comas
-                    if (dataArray.size >= 3) {
-                        val dato1 = dataArray[0]    //Pulso
-                        val dato2 = dataArray[1]    //velocidad
-                        val dato3 = dataArray[2]    //Caudal
+                    // Convierte los bytes recibidos en un String y agrégalo al charBuffer
+                    charBuffer.append(String(buffer, 0, bytes))
 
-                        // Actualizar la interfaz de usuario en el hilo principal
-                        CoroutineScope(Dispatchers.IO).launch {
-                            withContext(Dispatchers.Main) {
-                                // Utilizar los datos extraídos como desees
+                    // Busca los separadores de línea en el charBuffer
+                    val delimiter = "\n"
+                    val rawData = charBuffer.toString()
+                    val lines = rawData.split(delimiter)
 
+
+                    // Procesa las líneas completas
+                    for (line in lines) {
+                        // Divide los datos por comas
+                        val dataArray = line.split(",")
+
+                        // Verificar que hay al menos tres datos separados por comas
+                        if (dataArray.size >= 3) {
+                            val dato1 = dataArray[0].trim()  // Pulso
+                            val dato2 = dataArray[1].trim()  // Velocidad
+                            val dato3 = dataArray[2].trim()  // Caudal
+
+                            // Actualizar la interfaz de usuario en el hilo principal
+                            runOnUiThread {
                                 textPulsos.text = dato1
                                 textVelocidad.text = dato2
                                 textCaudal.text = dato3
                             }
                         }
-
                     }
 
-                }catch (e: IOException) {
+                    // Elimina las líneas procesadas del charBuffer
+                    if (lines.isNotEmpty()) {
+                        charBuffer.delete(0, lines.lastIndex + delimiter.length)
+                    }
+
+                } catch (e: IOException) {
                     e.printStackTrace()
-                    // Manejar la excepción (por ejemplo, conexión perdida)
                     break
                 }
-
             }
         }
-
     }
 }
