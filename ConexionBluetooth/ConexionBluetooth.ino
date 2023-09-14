@@ -26,7 +26,7 @@ int ObtenerFrecuencia()
   int frecuencia;
   CantPulsos = 0;   //Ponemos a 0 el número de pulsos
   interrupts();    //Habilitamos las interrupciones
-  delay(1000);   //muestra de 1 segundo
+  delay(500);   //muestra de 1 segundo
   noInterrupts(); //Desabilitamos las interrupciones
   frecuencia=CantPulsos; //Hz(pulsos por segundo)
   return frecuencia;
@@ -54,8 +54,18 @@ void loop() {
   // Realizo los cálculos
   LxM = (frecuenciaPulsos / FacConv);                         //Calcula los Litros por Minuto 
   Velocidad = (LxM / Area)*(0.000016667);                     //Calculo la velocidad 
+  Velocidad = CalibrarVelocidad(Velocidad);
   Caudal = (LxM/60000);                                       //Caudal en m³/seg
   Serial.print(frecuenciaPulsos); Serial.print(","); Serial.print(LxM , 3); Serial.print(","); Serial.print(Velocidad , 3); Serial.print(","); Serial.println(Caudal , 8);  //Muetsro los datos por el serial
   BT1.print(frecuenciaPulsos); BT1.print(","); BT1.print(Velocidad,4); BT1.print(","); BT1.println(Caudal, 8);     //Envio los datos por bluetooth
 
+}
+
+float CalibrarVelocidad(float valor){
+  if(valor = 0){
+    return 0;
+  }else{
+    return 0.362521163*log(valor) + 1.885488;
+  }
+  
 }
